@@ -6,12 +6,12 @@ This is a reasonable developer environment with Ubuntu. Some goodies include
 - Tinos [nerd font](https://www.nerdfonts.com/) for your terminal
 - [direnv](https://direnv.net/) for per-project environmental variables
 - [zoxide](https://github.com/ajeetdsouza/zoxide) to easily switch between your most-visited directories
-- [bat](https://github.com/sharkdp/bat) -- a better `cat`... now with... wings?
-- [fd](https://github.com/sharkdp/fd) -- imagine if find knew about git-ignore, and hidden files, and had a syntax you could remember
+- [bat](https://github.com/sharkdp/bat) - a better `cat`... now with... wings?
+- [fd](https://github.com/sharkdp/fd) - imagine if find knew about git-ignore, and hidden files, and had a syntax you could remember
 - [fzf](https://github.com/junegunn/fzf) quickly search history, files, git logs, and processes
 - [ripgrep](https://github.com/BurntSushi/ripgrep) -- sure beats `find . -iname '*.py' -exec grep 'search term' {}+\` or whatever that command is.
 - [tokei](https://github.com/XAMPPRocky/tokei) for getting line counts of your projects
-- [eza](https://github.com/eza-community/eza) ls improved
+- [eza](https://github.com/eza-community/eza) - ls improved
 - A git alias expander quite a bit like [this](https://gitlab.com/pinage404/omf_pkg_enlarge_your_git_alias/-/tree/master/)
 - [neovim]()
 
@@ -30,6 +30,10 @@ Then run ansible
 sudo apt install ansible
 ansible-playbook -kK dev-env.yaml
 ```
+
+## &#x26a0;&#xfe0f; Caveat emptor &#x26a0;&#xfe0f;
+
+&#x26a0;&#xfe0f; Whatever you do... don't use that docker image with it's default password &#x26a0;&#xfe0f;
 
 ## Post-setup
 
