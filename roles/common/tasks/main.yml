@@ -12,6 +12,7 @@
     - build-essential
     - cmake
     - curl
+    - git
     - direnv
     - fish
     - zoxide
