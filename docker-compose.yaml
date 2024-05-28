@@ -1,0 +1,9 @@
+---
+services:
+  test:
+    build: .
+    volumes:
+      - .:/home/test/ansible
+    ports:
+      - 8022:22
+

@@ -1,0 +1,109 @@
+- name: Update repositories
+  become: true
+  apt: update_cache=yes
+  changed_when: False
+
+- name: Install developer packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - build-essential
+    - cmake
+    - curl
+    - direnv
+    - fish
+    - zoxide
+    - fzf
+    - bat
+    - fd-find
+    - ripgrep
+
+- name: Change shell to fish
+  become: true
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    shell: /usr/bin/fish
+
+- name: Check cargo installed
+  shell: command -v cargo
+  ignore_errors: true
+  register: cargo_exists
+
+- name: Install rust
+  when: cargo_exists is failed
+  block:
+    - name: Download installer
+      get_url:
+        url: "https://sh.rustup.rs"
+        dest: /tmp/sh.rustup.rs
+        mode: "0755"
+        force: "yes"
+
+    - name: Install rust
+      shell: /tmp/sh.rustup.rs -y 
+
+    - name: Ensure rust in PATH
+      become: true
+      ansible.builtin.copy:
+        dest: /etc/profile.d/rust-path.sh
+        content: "source $HOME/.cargo/env"
+
+- name: Install rust packages
+  community.general.cargo:
+    name: "{{ item }}"
+    locked: true 
+  with_items:
+    - tokei
+    - bottom
+    - starship
+    - eza
+
+- name: Install nerd font
+  block:
+    - name: Ensure fonts directory exists
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.local/share/fonts"
+        state: directory
+
+    - name: Tinos exists
+      find:
+        paths: "{{ lookup('env', 'HOME') }}/.local/share/fonts/"
+        patterns: "Tinos*.ttf"
+      register: find_tinos
+    - name: Download Tinos
+      get_url:
+        url: "https://github.com/ryanoasis/nerd-fonts/blob/a07648b1eef52c87670fcd5b567c55493c0b3205/patched-fonts/Tinos/Regular/complete/Tinos%20Nerd%20Font%20Complete%20Mono.ttf"
+        dest: "{{ lookup('env', 'HOME') }}/.local/share/fonts/Tinos Nerd Font Complete Mono.ttf"
+      when: find_tinos.matched == 0
+
+    - name: Install Tinos font
+      command: fc-cache -fv
+      when: find_tinos.matched == 0
+
+- name: Check if fisher installed
+  stat:
+    path: "{{ lookup('env','HOME') }}/.config/fish/functions/fisher.fish"
+  register: find_fisher
+
+- name: Install fisher
+  when: not find_fisher.stat.exists
+  block:
+    - name: Download fisher
+      get_url:
+        url: "https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish"
+        dest: /tmp/fisher.fish
+    - name: Install fisher
+      shell:
+        cmd: source /tmp/fisher.fish && fisher install "jorgebucaran/fisher"
+        executable: /usr/bin/fish
+
+- name: Install fisher plugins
+  shell: 
+    cmd: fisher install "{{ item }}"
+    executable: /usr/bin/fish
+  with_items:
+   - patrickf3139/fzf.fish
+
+
