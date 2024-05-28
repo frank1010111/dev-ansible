@@ -1,0 +1,25 @@
+[credential]
+    helper = cache
+[alias]
+    a = add
+    c = commit	
+    co = checkout
+    cob = checkout --branch
+    d = diff
+    unstage = restore --staged
+    l = pull
+    fa = fetch --all
+    p = push
+    ss = status --short
+[branch]
+    sort = -committerdate
+[init]
+    defaultBranch = main
+[merge]
+    conflictstyle = zdiff3
+[commit]
+    verbose = true
+[diff]
+    algorithm = histogram
+[push]
+    default = simple

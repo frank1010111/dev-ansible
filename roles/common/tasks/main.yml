@@ -19,6 +19,7 @@
     - bat
     - fd-find
     - ripgrep
+    - neovim
 
 - name: Change shell to fish
   become: true
@@ -59,7 +60,38 @@
     - bottom
     - starship
     - eza
-
+  
+- name: Configure git
+  ansible.builtin.blockinfile:
+    path: "{{ lookup('env', 'HOME')}}/.gitconfig"
+    append_newline: true
+    create: true
+    block: |
+      [credential]
+          helper = cache
+      [alias]
+          a = add
+          c = commit	
+          co = checkout
+          cob = checkout --branch
+          d = diff
+          unstage = restore --staged
+          l = pull
+          fa = fetch --all
+          p = push
+          ss = status --short
+      [branch]
+          sort = -committerdate
+      [init]
+          defaultBranch = main
+      [merge]
+          conflictstyle = zdiff3
+      [commit]
+          verbose = true
+      [diff]
+          algorithm = histogram
+      [push]
+          default = simple
 - name: Install nerd font
   block:
     - name: Ensure fonts directory exists
@@ -81,6 +113,22 @@
     - name: Install Tinos font
       command: fc-cache -fv
       when: find_tinos.matched == 0
+
+- name: Configure fish
+  block:
+    - name: Set fish aliases
+      copy: 
+        src: alias.fish
+        dest: "{{ lookup('env','HOME') }}/.config/fish/alias.fish"
+    - name: Set fish config
+      copy:
+        src: config.fish
+        dest: "{{ lookup('env','HOME') }}/.config/fish/config.fish"
+    - name: Expand git aliases
+      copy:
+        src: git_alias.fish
+        dest: "{{ lookup('env','HOME') }}/.config/fish/conf.d/git_alias.fish"
+
 
 - name: Check if fisher installed
   stat:
