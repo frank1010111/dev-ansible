@@ -74,7 +74,7 @@
           a = add
           c = commit	
           co = checkout
-          cob = checkout --branch
+          cob = checkout -b
           d = diff
           unstage = restore --staged
           l = pull
