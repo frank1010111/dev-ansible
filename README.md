@@ -33,7 +33,7 @@ ansible-playbook -kK dev-env.yaml
 
 ## &#x26a0;&#xfe0f; Caveat emptor &#x26a0;&#xfe0f;
 
-&#x26a0;&#xfe0f; Whatever you do... don't use that docker image with it's default password &#x26a0;&#xfe0f;
+&#x26a0;&#xfe0f; Whatever you do... don't use that docker image with its default password &#x26a0;&#xfe0f;
 
 ## Post-setup
 
