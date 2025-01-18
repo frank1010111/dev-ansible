@@ -149,4 +149,14 @@
   with_items:
    - patrickf3139/fzf.fish
 
+- name: Add direnv configuration
+  block:
+    - name: ensure direnv config directory exists
+      file:
+        path: "{{ lookup('env','HOME') }}/.config/direnv"
+        state: directory
+    - name: Add direnv config file
+      copy:
+        src: direnvrc
+        dest: "{{ lookup('env','HOME') }}/.config/direnv/direnvrc"
 
