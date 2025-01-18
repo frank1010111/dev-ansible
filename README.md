@@ -13,11 +13,11 @@ This is a reasonable developer environment with Ubuntu. Some goodies include
 - [tokei](https://github.com/XAMPPRocky/tokei) for getting line counts of your projects
 - [eza](https://github.com/eza-community/eza) - ls improved
 - A git alias expander quite a bit like [this](https://gitlab.com/pinage404/omf_pkg_enlarge_your_git_alias/-/tree/master/)
-- [neovim]()
+- [neovim](https://neovim.io/)
 
 ## Setup
 
-Maks sure you've got your ssh server installed and up
+Make sure you've got your ssh server installed and up
 
 ```sh
 sudo apt install openssh-server
