@@ -2,9 +2,9 @@
     helper = cache
 [alias]
     a = add
-    c = commit	
+    c = commit
     co = checkout
-    cob = checkout --branch
+    cob = checkout -b
     d = diff
     unstage = restore --staged
     l = pull

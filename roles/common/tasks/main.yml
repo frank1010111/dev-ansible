@@ -67,32 +67,8 @@
     path: "{{ lookup('env', 'HOME')}}/.gitconfig"
     append_newline: true
     create: true
-    block: |
-      [credential]
-          helper = cache
-      [alias]
-          a = add
-          c = commit	
-          co = checkout
-          cob = checkout -b
-          d = diff
-          unstage = restore --staged
-          l = pull
-          fa = fetch --all
-          p = push
-          ss = status --short
-      [branch]
-          sort = -committerdate
-      [init]
-          defaultBranch = main
-      [merge]
-          conflictstyle = zdiff3
-      [commit]
-          verbose = true
-      [diff]
-          algorithm = histogram
-      [push]
-          default = simple
+    block: "{{ lookup('file', 'roles/common/files/gitconfig') }}"
+
 - name: Install nerd font
   block:
     - name: Ensure fonts directory exists
