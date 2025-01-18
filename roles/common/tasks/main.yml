@@ -62,7 +62,24 @@
     - bottom
     - starship
     - eza
-  
+
+- name: Install uv
+  block:
+  - name: Download the uv installer script
+    get_url:
+      url: https://github.com/astral-sh/uv/releases/download/0.5.21/uv-installer.sh
+      dest: /tmp/uv-installer.sh
+      mode: '0755'
+  - name: Execute the uv installer script
+    command: /tmp/uv-installer.sh
+    args:
+      creates: "{{ lookup('env', 'HOME')}}/.local/bin/uv"
+  - name: Add .local/bin to path
+    become: true
+    ansible.builtin.copy:
+      dest: /etc/profile.d/local-path.sh
+      content: "export PATH=$PATH:$HOME/.local/bin"
+
 - name: Configure git
   ansible.builtin.blockinfile:
     path: "{{ lookup('env', 'HOME')}}/.gitconfig"
